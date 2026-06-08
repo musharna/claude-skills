@@ -1,0 +1,82 @@
+[
+  {
+    "query": "the root cause is the cache TTL expiring while the request is still in-flight",
+    "should_trigger": true,
+    "tag": "diagnostic-claim:root-cause-direct"
+  },
+  {
+    "query": "this is happening because the migration script silently skipped the new column",
+    "should_trigger": true,
+    "tag": "diagnostic-claim:happening-because"
+  },
+  {
+    "query": "what's happening is the worker is exiting before the queue drains",
+    "should_trigger": true,
+    "tag": "diagnostic-claim:whats-happening"
+  },
+  {
+    "query": "the cause is that the lock is being released before the commit completes",
+    "should_trigger": true,
+    "tag": "diagnostic-claim:cause-is"
+  },
+  {
+    "query": "the bug is in the retry loop - it doesn't reset the backoff timer on success",
+    "should_trigger": true,
+    "tag": "fix-flow:bug-is"
+  },
+  {
+    "query": "to fix this I'll add a try/except around the API call",
+    "should_trigger": true,
+    "tag": "fix-flow:add-handler"
+  },
+  {
+    "query": "the issue is the timeout being too short; the fix would be to bump it to 30s",
+    "should_trigger": true,
+    "tag": "fix-flow:issue-is-plus-fix-would-be"
+  },
+  {
+    "query": "let me add a special case for when the input list is empty so the divide-by-zero doesn't happen",
+    "should_trigger": true,
+    "tag": "code-pattern:special-case-guard"
+  },
+  {
+    "query": "I'll add a debug_mode flag so we can disable the validation when running tests",
+    "should_trigger": true,
+    "tag": "code-pattern:mode-flag"
+  },
+  {
+    "query": "when the user is admin also skip the rate limit check",
+    "should_trigger": true,
+    "tag": "code-pattern:when-X-also-do-Y-branch"
+  },
+  {
+    "query": "explain how database transactions handle deadlocks",
+    "should_trigger": false,
+    "tag": "near-miss:educational-explanation"
+  },
+  {
+    "query": "what are common causes of memory leaks in long-running Python processes?",
+    "should_trigger": false,
+    "tag": "near-miss:general-knowledge-question"
+  },
+  {
+    "query": "write a function that retries an HTTP call up to 3 times with exponential backoff",
+    "should_trigger": false,
+    "tag": "near-miss:greenfield-coding-no-bug"
+  },
+  {
+    "query": "refactor this module to use dataclasses instead of dicts",
+    "should_trigger": false,
+    "tag": "near-miss:refactor-no-bug"
+  },
+  {
+    "query": "the README is out of date; can you update it to reflect the new CLI flags",
+    "should_trigger": false,
+    "tag": "near-miss:docs-update-not-code-bug"
+  },
+  {
+    "query": "add type hints to all the public functions in utils.py",
+    "should_trigger": false,
+    "tag": "near-miss:annotation-task-no-diagnosis"
+  }
+]
