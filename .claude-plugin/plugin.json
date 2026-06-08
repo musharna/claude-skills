@@ -1,0 +1,19 @@
+{
+  "name": "claude-skills",
+  "description": "Three general-purpose rigor skills for agentic coding: causal debugging discipline, citation grounding, and Playwright MCP token efficiency.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jaret Arnold"
+  },
+  "repository": "https://github.com/musharna/claude-skills",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "skills",
+    "debugging",
+    "citations",
+    "playwright",
+    "agentic"
+  ],
+  "skills": "./skills/"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "musharna-claude-skills",
+  "owner": {
+    "name": "musharna"
+  },
+  "metadata": {
+    "description": "Marketplace for the claude-skills plugin"
+  },
+  "plugins": [
+    {
+      "name": "claude-skills",
+      "source": "./",
+      "description": "Three general-purpose rigor skills for agentic coding: causal-vs-bandaid debugging discipline, grounded-quote-or-decline citation grounding, and playwright-token-budget MCP token efficiency."
+    }
+  ]
+}
