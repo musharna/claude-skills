@@ -1,0 +1,72 @@
+[
+  {
+    "query": "write the background section of the audit memo stating that the API rate limit is 100 requests per minute per the vendor docs",
+    "should_trigger": true,
+    "tag": "load-bearing:audit-memo-sourced-claim"
+  },
+  {
+    "query": "add a citation to the RFC claiming the new algorithm cuts latency by 40% based on the benchmark paper",
+    "should_trigger": true,
+    "tag": "load-bearing:rfc-citation"
+  },
+  {
+    "query": "the wiki page should say that the default timeout was changed to 30 seconds in version 2.0",
+    "should_trigger": true,
+    "tag": "load-bearing:wiki-version-claim"
+  },
+  {
+    "query": "in the synthesis doc, assert that three independent studies found the same effect size",
+    "should_trigger": true,
+    "tag": "load-bearing:synthesis-multi-source"
+  },
+  {
+    "query": "add a code comment explaining WHY we retry exactly 5 times, citing the upstream service's documented backoff window",
+    "should_trigger": true,
+    "tag": "load-bearing:why-comment-from-source"
+  },
+  {
+    "query": "I recall the paper said the model was trained on 2 billion tokens, put that in the summary",
+    "should_trigger": true,
+    "tag": "red-flag:i-recall-into-prose"
+  },
+  {
+    "query": "the literature shows that this approach is standard practice, write that into the introduction",
+    "should_trigger": true,
+    "tag": "red-flag:literature-shows-no-paper"
+  },
+  {
+    "query": "document in the report that the user confirmed the deadline is Friday, based on what they said earlier",
+    "should_trigger": true,
+    "tag": "load-bearing:prior-chat-claim"
+  },
+  {
+    "query": "what's a good way to structure a literature review?",
+    "should_trigger": false,
+    "tag": "near-miss:how-to-question"
+  },
+  {
+    "query": "let's brainstorm some possible explanations for the slowdown before we look anything up",
+    "should_trigger": false,
+    "tag": "near-miss:brainstorming-scratch"
+  },
+  {
+    "query": "rename this variable from tmp to request_count",
+    "should_trigger": false,
+    "tag": "near-miss:mechanical-edit"
+  },
+  {
+    "query": "yes that sounds right, go ahead",
+    "should_trigger": false,
+    "tag": "near-miss:conversational-reply"
+  },
+  {
+    "query": "run the test suite and tell me which tests fail",
+    "should_trigger": false,
+    "tag": "near-miss:report-of-local-observation"
+  },
+  {
+    "query": "reformat this paragraph to use shorter sentences, don't change any facts",
+    "should_trigger": false,
+    "tag": "near-miss:style-only-edit"
+  }
+]

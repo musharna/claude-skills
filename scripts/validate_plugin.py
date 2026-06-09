@@ -8,6 +8,8 @@ import re
 import sys
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parent.parent
 ERRORS = []
 
@@ -44,12 +46,13 @@ def parse_frontmatter(text):
     if end == -1:
         return None
     block = text[3:end]
-    fields = {}
-    for line in block.splitlines():
-        m = re.match(r"^(\w[\w-]*):\s*(.*)$", line)
-        if m:
-            fields[m.group(1)] = m.group(2).strip()
-    return fields
+    try:
+        data = yaml.safe_load(block)
+    except yaml.YAMLError:
+        return None
+    if not isinstance(data, dict):
+        return None
+    return data
 
 
 def check_skills():
@@ -93,10 +96,42 @@ def check_hygiene():
                 err(f"{f.relative_to(ROOT)}: hygiene hit ({label})")
 
 
+def assert_trigger_fixtures():
+    """Load every skills/*/eval-triggers.json and validate its schema.
+
+    Each file is a JSON list of labeled trigger cases. Every entry must carry:
+      - query (str): the example prompt
+      - should_trigger (bool): whether the skill should fire on it
+      - tag (str): a non-empty label for the case
+    A malformed or missing key fails the validator (non-zero exit)."""
+    fixtures = sorted((ROOT / "skills").glob("*/eval-triggers.json"))
+    for fx in fixtures:
+        rel = fx.relative_to(ROOT)
+        try:
+            data = json.loads(fx.read_text())
+        except json.JSONDecodeError as e:
+            err(f"{rel}: invalid JSON ({e})")
+            continue
+        if not isinstance(data, list) or not data:
+            err(f"{rel}: expected a non-empty JSON list of cases")
+            continue
+        for i, entry in enumerate(data):
+            if not isinstance(entry, dict):
+                err(f"{rel}[{i}]: entry is not an object")
+                continue
+            if not isinstance(entry.get("query"), str) or not entry["query"].strip():
+                err(f"{rel}[{i}]: missing/empty 'query' (str)")
+            if not isinstance(entry.get("should_trigger"), bool):
+                err(f"{rel}[{i}]: 'should_trigger' must be a bool")
+            if not isinstance(entry.get("tag"), str) or not entry["tag"].strip():
+                err(f"{rel}[{i}]: missing/empty 'tag' (str)")
+
+
 def main():
     check_manifests()
     check_skills()
     check_hygiene()
+    assert_trigger_fixtures()
     if ERRORS:
         print("VALIDATION FAILED:")
         for e in ERRORS:
