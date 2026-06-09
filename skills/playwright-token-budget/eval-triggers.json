@@ -1,0 +1,72 @@
+[
+  {
+    "query": "take a screenshot of the page so I can see what's on it before clicking",
+    "should_trigger": true,
+    "tag": "routing:screenshot-to-see-page"
+  },
+  {
+    "query": "grab a browser_snapshot and find the login button",
+    "should_trigger": true,
+    "tag": "routing:snapshot-find-element"
+  },
+  {
+    "query": "use browser_evaluate to return document.body.outerHTML so we can search it",
+    "should_trigger": true,
+    "tag": "routing:evaluate-full-html-dump"
+  },
+  {
+    "query": "screenshot the whole page to confirm the form submitted",
+    "should_trigger": true,
+    "tag": "routing:fullpage-screenshot-for-verification"
+  },
+  {
+    "query": "snapshot the page and check that the success banner text is visible",
+    "should_trigger": true,
+    "tag": "routing:snapshot-verify-text"
+  },
+  {
+    "query": "pull the current cart total off the page with browser_evaluate",
+    "should_trigger": true,
+    "tag": "routing:evaluate-specific-value"
+  },
+  {
+    "query": "the click isn't registering even though the element is in the snapshot, take a screenshot to diagnose",
+    "should_trigger": true,
+    "tag": "routing:occlusion-diagnosis"
+  },
+  {
+    "query": "capture a full-viewport screenshot of the homepage for the design review",
+    "should_trigger": true,
+    "tag": "routing:screenshot-as-deliverable"
+  },
+  {
+    "query": "navigate to https://example.com/login",
+    "should_trigger": false,
+    "tag": "near-miss:browser-navigate-no-payload"
+  },
+  {
+    "query": "click the submit button",
+    "should_trigger": false,
+    "tag": "near-miss:browser-click-no-payload"
+  },
+  {
+    "query": "type my-username into the username field",
+    "should_trigger": false,
+    "tag": "near-miss:browser-type-no-payload"
+  },
+  {
+    "query": "press the Escape key to dismiss the dialog",
+    "should_trigger": false,
+    "tag": "near-miss:browser-press-key"
+  },
+  {
+    "query": "what does the Playwright MCP do?",
+    "should_trigger": false,
+    "tag": "near-miss:general-question-about-tool"
+  },
+  {
+    "query": "install the playwright MCP server",
+    "should_trigger": false,
+    "tag": "near-miss:setup-not-driving"
+  }
+]
