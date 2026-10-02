@@ -53,6 +53,12 @@ verbatim quote tied to a locatable source, or is declined — there is no
 paraphrase-without-quote third state. Pairs with the [`ghostcite`](https://github.com/musharna/ghostcite)
 CLI for deterministic citation byline checks.
 
+Measured with `claude plugin eval` (`evals/grounded-quote-or-decline/`): on
+Claude Opus 5.5 it showed no lift over the same model without the plugin (16
+cases, mean Δ 0). Given a pasted source missing one requested fact, the model
+declined to supply it with and without the skill. It may still help on smaller
+models; run the suite on yours before relying on it.
+
 <details><summary>Example</summary>
 
 > **Grounded:** "The default request timeout is 30s." → quote: _"`DEFAULT_TIMEOUT = 30  # seconds`"_ — pointer: `src/client.py:12`.
