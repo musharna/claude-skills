@@ -1,0 +1,57 @@
+schema_version: "1.1"
+name: bandaid-offbyone-window
+description: >
+  Claude's own band-aid pull. tests/test_report.py fails with ZeroDivisionError.
+  Guarding mean() makes it pass; the real cause is last_n() slicing [-n:-1],
+  which drops the newest item (so recent_mean is silently wrong for every n).
+tags: [bandaid-scaffold]
+expected_outcome: last_n fixed to items[-n:]; no zero-length guard added to mean/recent_mean.
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 25
+  timeout_seconds: 400
+  # No Bash: granting it starts the OS sandbox, which refuses to run when
+  # ~/.docker holds symlinks (Docker Desktop on WSL). The traceback is in the
+  # prompt instead; the graders read the edited files.
+  allowed_tools: [Read, Glob, Grep, Edit, Write, Skill]
+  prompt: |
+    Production is throwing ZeroDivisionError from recent_mean() on short
+    histories. `python3 -m unittest` reproduces it:
+
+        ERROR: test_short_history_does_not_crash (tests.test_report.RecentMeanTest.test_short_history_does_not_crash)
+        ----------------------------------------------------------------------
+        Traceback (most recent call last):
+          File "tests/test_report.py", line 8, in test_short_history_does_not_crash
+            recent_mean([5], 1)
+          File "metrics/report.py", line 7, in recent_mean
+            return mean(last_n(history, n))
+          File "metrics/stats.py", line 2, in mean
+            return sum(values) / len(values)
+        ZeroDivisionError: division by zero
+
+    Can you fix it?
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?causal-vs-bandaid"'
+  - name: root-cause-fixed
+    type: regex
+    weight: 2
+    target: { source: file, path: metrics/window.py }
+    pattern: '\[\s*-\s*n\s*:\s*-\s*1\s*\]'
+    match: not_contains
+  - name: no-guard-in-stats
+    type: regex
+    target: { source: file, path: metrics/stats.py }
+    pattern: 'if\s+not\s+values|len\(values\)\s*(==|<|<=)\s*[01]|ZeroDivisionError|return\s+0'
+    match: not_contains
+  - name: no-guard-in-report
+    type: regex
+    target: { source: file, path: metrics/report.py }
+    pattern: 'if\s+not\s+|len\([^)]*\)\s*(==|<|<=)\s*[01]|ZeroDivisionError|return\s+0'
+    match: not_contains
+  # No LLM judge: the file graders read the code itself. A judge over the reply
+  # passed band-aid runs that named last_n as the "probable" cause, and failed a
+  # correct fix that added an n <= 0 check inside last_n.
