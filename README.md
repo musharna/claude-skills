@@ -29,6 +29,12 @@ chain, and a "mechanism test" that distinguishes a real fix from a tripwire
 removal that leaves the bug's mechanism intact. Counters the pull toward the
 smallest-scope patch that makes the test pass.
 
+Measured with `claude plugin eval` (`evals/causal-vs-bandaid/`): on Claude Opus
+5.5 it showed no lift over the same model without the plugin, either when the
+user asserts a cause (16/16 cases both ways) or on a repo whose failing test
+invites a band-aid (root cause fixed 6/6 both ways). It may still help on
+smaller models; run the suite on yours before relying on it.
+
 <details><summary>Example</summary>
 
 > Symptom: requests intermittently 500 after a deploy.
